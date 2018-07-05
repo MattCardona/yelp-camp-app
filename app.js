@@ -8,9 +8,6 @@ const methodOverride = require("method-override");
 const path = require("path");
 const flash = require("connect-flash");
 
-//need to put in .env file
-console.log(process.env.MONGODB_URI);
-console.log(process.env.SESSION_SECRET);
 const url = process.env.MONGODB_URI;
 
 const {Campground} = require("./models/campground.js");
@@ -35,7 +32,6 @@ app.set("view engine", "ejs");
 //===============
 //Passport Config
 //===============
-//need to change the secrete to a proccess.env variable as well
 app.use(require('express-session')({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
