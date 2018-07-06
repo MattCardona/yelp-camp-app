@@ -15,7 +15,7 @@
           <h4 class="pull-right">$<%= campground.price %>/night</h4>
           <h4><a><%= campground.name %></a></h4>
           <p><%= campground.description %></p>
-          <p><em>Submitted by: <%= campground.author.username %></em></p>
+          <p><em>Submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em></p>
           <% if(currentUser && campground.author.id.equals(currentUser._id)){%>
             <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
             <form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
@@ -83,7 +83,7 @@
             <%= comment.author.username %>
         </strong>
         <!--Show when the comment was made-->
-        <span class="pull-right"></span>
+        <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
         <!--Printing the comment-->
         <p><%= comment.text %></p>
         <!--If the visitor is logged in and the owner of the comment, show the edit and delete buttons-->
