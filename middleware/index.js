@@ -22,7 +22,7 @@ const checkCommentOwnership = (req, res, next) => {
                 }
             }).catch((err) => {
                 req.flash("error", "Commment not found");
-                console.log(`Unable to get ${err}`);
+                // console.log(`Unable to get ${err}`);
                 res.redirect("back");
             });
     }else{
@@ -43,7 +43,7 @@ const checkCampgroundOwnership = (req, res, next) => {
                 }
             }).catch((err) => {
                 req.flash("error", "Campground not found");
-                console.log(`Unable to get ${err}`);
+                // console.log(`Unable to get ${err}`);
                 res.redirect("back");
             });
     }else{

@@ -9,7 +9,7 @@ router.get("/new", isLoggedIn, (req,res) => {
     Campground.findById({_id: id}).then((doc) => {
         res.status(200).render("comments/new", {campground: doc});
     }).catch((err) => {
-        console.log(`Error: ${err}`);
+        // console.log(`Error: ${err}`);
         res.status(400);
     });
 });
@@ -25,16 +25,16 @@ router.post("/", isLoggedIn, (req,res) => {
             // console.log(newcomment);
             camp.comments.push(newcomment);
             camp.save().then((campwcomment) => {
-                console.log(`Saved new comment ${campwcomment}`);
+                // console.log(`Saved new comment ${campwcomment}`);
                 req.flash("success", "Successfully added comment");
                 res.status(200).redirect(`/campgrounds/${id}`);
             }).catch((err) => {
-                console.log(`Error w/ saving comment ${err}`);
+                // console.log(`Error w/ saving comment ${err}`);
             });
         })
     }).catch((err) => {
         req.flash("error", "Something went wrong")
-        console.log(`Error: ${err}`);
+        // console.log(`Error: ${err}`);
         res.status(400).redirect("/campgrounds");
     });
 });
@@ -46,7 +46,7 @@ router.get("/:comment_id/edit", checkCommentOwnership, (req, res) => {
     Comment.findById({_id: commentId}).then((foundComment) => {
         res.render("comments/edit", {campground_id: id, comment: foundComment});
     }).catch((err) => {
-        console.log(`Error trying to get the comment ${err}`);
+        // console.log(`Error trying to get the comment ${err}`);
         res.redirect("back");
     })
 });

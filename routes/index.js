@@ -27,7 +27,7 @@ router.post("/register", (req,res) => {
         });
     }).catch((err) => {
         req.flash("error", err.message);
-        console.log(`Error awww ${err}`);
+        // console.log(`Error awww ${err}`);
         res.redirect("register")
     });
 });
