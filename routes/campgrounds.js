@@ -6,7 +6,7 @@ const {isLoggedIn, checkCampgroundOwnership} = require("../middleware");
 
 router.get("/", (req,res) => {
     Campground.find({}).then((campgrounds) => {
-        res.status(200).render("campgrounds/index", {campsites: campgrounds});
+        res.status(200).render("campgrounds/index", {campsites: campgrounds, page: "campgrounds"});
     }, (err) => {
         // console.log(`Unable to get ${err}`);
         res.status(400);
