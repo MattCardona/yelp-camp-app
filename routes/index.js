@@ -18,11 +18,15 @@ router.get("/register", (req,res) => {
 router.post("/register", (req,res) => {
     const password = req.body.password;
     const newUser = new User({username: req.body.username});
+
+    if(req.body.admin === process.env.ADMIN_SAUCE){
+        newUser.isAdmin = true;
+    }
     //what this does is saves our newUser and also salts and hashes the password
     User.register(newUser, password).then((user) => {
         //login the user
         passport.authenticate("local")(req, res, () => {
-            req.flash("success", `Welcome to YelpCamp ${user.username}`);
+            req.flash("success", `Successfully! Signed Up! Welcome to YelpCamp ${user.username}`);
             res.redirect("/campgrounds");
         });
     }).catch((err) => {
