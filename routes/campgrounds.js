@@ -4,16 +4,37 @@ const {Campground} = require("../models/campground.js");
 const {Comment} = require("../models/comment.js");
 const {isLoggedIn, checkCampgroundOwnership} = require("../middleware");
 
+const escapeRegex = (text) => {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 router.get("/", (req,res) => {
-    Campground.find({}).then((campgrounds) => {
-        res.status(200).render("campgrounds/index", {campsites: campgrounds, page: "campgrounds"});
-    }, (err) => {
-        // console.log(`Unable to get ${err}`);
-        res.status(400);
-    }).catch((error) => {
-        // console.log(`Error in catch ${error}`);
-        res.status(400);
-    })
+    let noMatch;
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), "gi");
+        Campground.find({name: regex}).then((campgrounds) => {
+            if(campgrounds.length < 1){
+                noMatch = "No campgrounds match that query, please try again.";
+            }
+            res.status(200).render("campgrounds/index", {campsites: campgrounds, page: "campgrounds", noMatch: noMatch});
+        }, (err) => {
+            // console.log(`Unable to get ${err}`);
+            res.status(400);
+        }).catch((error) => {
+            // console.log(`Error in catch ${error}`);
+            res.status(400);
+        })
+    }else{
+        Campground.find({}).then((campgrounds) => {
+            res.status(200).render("campgrounds/index", {campsites: campgrounds, page: "campgrounds", noMatch: noMatch});
+        }, (err) => {
+            // console.log(`Unable to get ${err}`);
+            res.status(400);
+        }).catch((error) => {
+            // console.log(`Error in catch ${error}`);
+            res.status(400);
+        })
+    }
 });
 //add new campground to database
 router.post("/", isLoggedIn, (req,res) => {

@@ -12,6 +12,21 @@
 
     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 
+        <%if(noMatch !== undefined){%>
+          <div class="col-sm-12 col-md-12">
+            <h3 class="text-center"><%= noMatch %></h3>
+             <p>
+              <form action="/campgrounds" method="GET" class="form-inline">
+                <div class="form-group">
+                  <input type="text" name="search" placeholder="Campground search..." class="form-control">
+                  <input type="submit" value="Search" class="btn btn-default">
+                </div>
+              </form>
+            </p>
+          </div>
+        <%}%>
+
+
       <% campsites.forEach(function(camp) { %>
         <div class="col-md-3 col-sm-6">
           <div class="thumbnail">
